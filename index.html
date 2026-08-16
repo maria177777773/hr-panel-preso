@@ -1,0 +1,336 @@
+<!doctype html><meta charset="utf-8"><title>Вызов Принят · HR-панель</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+:root{
+  /* фирменная звёздочка: маркеры списков и акценты рисуются ей, а не ромбиком */
+  --star:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.2l2.94 6.2 6.76.83-4.97 4.66 1.3 6.71L12 17.3l-6.03 3.3 1.3-6.71L2.3 9.23l6.76-.83z'/></svg>");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#08090b;font-family:'Manrope',-apple-system,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased}
+.deck{max-width:1340px;margin:0 auto;padding:34px 20px 90px}
+.hint{color:#7c828d;font-size:16px;margin:0 6px 24px;line-height:1.55}
+
+/* слайды, где заголовок начинается сверху, опускаем ниже логотипа */
+.s.numbers,.s.path,.s.problem,.s.phone,.s.board{padding-top:118px}
+.s.problem .prs{margin-top:22px}
+.s.problem .pr{padding:20px 24px 22px}
+.s.problem .verdict{margin-top:26px}
+.slide-logo{position:absolute;top:30px;left:40px;display:flex;align-items:center;gap:12px;z-index:3}
+.slide-logo img{height:74px;width:74px;border-radius:20px;display:block}
+.slide-logo span{display:flex;flex-direction:column;line-height:1.15}
+.slide-logo b{font-size:20px;font-weight:700;letter-spacing:-.01em;color:#101114}
+.slide-logo i{font-style:normal;font-size:15px;color:#6d747e}
+.slide-logo.right{left:auto;right:40px}
+.s.dark .slide-logo b{color:#fff}
+.s.dark .slide-logo i{color:#9aa1ac}
+.s{width:1280px;height:720px;margin:0 auto 30px;view-timeline-name:--s;animation:въезд linear both;animation-timeline:view();animation-range:entry 0% entry 46%;position:relative;overflow:hidden;
+  border-radius:24px;background:#fff;color:#101114;padding:64px 72px;
+  display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.s.dark{background:#101114;color:#fff}
+.num{position:absolute;right:34px;bottom:26px;font-size:14px;font-weight:600;opacity:.28;
+  font-variant-numeric:tabular-nums}
+
+h1{font-size:64px;line-height:1.06;font-weight:800;letter-spacing:-.03em}
+h2{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.028em}
+.lead{font-size:20px;line-height:1.5;font-weight:400;max-width:52ch;margin-top:18px;color:#4b525c}
+.s.dark .lead{color:#a7aeb9}
+.lead.big{font-size:24px;max-width:60ch}
+/* ключевая мысль слайда: жирный текст и тонкая жёлтая черта под ним (Маша 09.08 — маркер мешал читать) */
+.hl{display:inline;color:#101114;font-weight:700;
+  box-shadow:inset 0 -4px 0 0 #ffd60a;padding-bottom:1px}
+.s.dark .hl{color:#fff;box-shadow:inset 0 -4px 0 0 rgba(255,214,10,.75)}
+
+/* слева смысл, справа вертикальный экран */
+.s.split{display:grid;grid-template-columns:1fr 470px;gap:52px;align-items:center;padding:42px 60px}
+.col-l{min-width:0}
+.col-r{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
+
+.steps{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap}
+.steps span{font-size:13px;font-weight:600;letter-spacing:.01em;color:#9aa1ac;
+  padding:6px 12px;border-radius:50px;background:#f2f3f5}
+.steps span.on{background:#101114;color:#ffd60a}
+/* название фишки — жёлтой плашкой, её видно первой (Маша 09.08) */
+.chap{display:inline-block;font-size:16px;font-weight:800;letter-spacing:-.01em;color:#101114;
+  background:#ffd60a;padding:7px 16px;border-radius:50px;margin-bottom:18px}
+.soon-tag{margin-left:14px;margin-bottom:14px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;background:#ffd60a;color:#101114;padding:7px 15px;
+  border-radius:50px;margin-bottom:16px}
+.soon-tag.ok{background:#0b7a42;color:#fff}
+.soon-tag:before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.55}
+
+.bul{list-style:none;margin-top:22px;display:grid;gap:11px}
+.bul li{position:relative;padding-left:26px;font-size:18px;line-height:1.45;color:#2c313a}
+/* фирменная звёздочка бренда вместо ромбика (Маша 09.08) */
+.bul li:before{content:'';position:absolute;left:-1px;top:4px;width:17px;height:17px;
+  background:#ffd60a;
+  -webkit-mask:var(--star) center/contain no-repeat;mask:var(--star) center/contain no-repeat}
+.s.dark .bul li{color:#d6dae1}
+
+.bgs{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.mds{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:20px;
+  border-top:1px solid #ecedf1;padding-top:18px}
+.md b{display:block;font-size:14px;font-weight:700;letter-spacing:-.01em}
+.md span{display:block;font-size:14px;color:#6d747e;margin-top:2px;line-height:1.35}
+.bg{display:flex;align-items:center;gap:10px;background:#f6f7f9;border-radius:14px;
+  padding:11px 16px}
+.bg img{width:26px;height:26px;border-radius:7px}
+.bg b{font-size:16px;font-weight:700}
+.bg span{font-size:14px;color:#71787f}
+
+.demo{display:inline-flex;align-items:center;gap:9px;margin-top:26px;background:#ffd60a;
+  color:#101114;font-size:16px;font-weight:700;padding:14px 26px;border-radius:50px;
+  text-decoration:none}
+.demo:after{content:'→'}
+
+/* вертикальный экран: скриншот виден ЦЕЛИКОМ, ничего не обрезано и не упирается в низ */
+.dev{width:100%;max-width:308px}   /* шире примерно на сантиметр вправо (Маша 09.08) */
+.dev-scr{border-radius:24px;overflow:hidden;background:#fff;aspect-ratio:780/1520;
+  box-shadow:0 4px 10px rgba(16,17,20,.10),0 26px 54px rgba(16,17,20,.22);
+  border:1px solid #e8eaee}
+.s.dark .dev-scr{border-color:#2a2d33;box-shadow:0 26px 54px rgba(0,0,0,.55)}
+.dev-scr img{width:100%;display:block}
+.dev .cap{margin-top:12px;text-align:center;font-size:14px;color:#8b929c}
+.dev.sm{max-width:260px}
+
+.wide{width:100%;display:flex;flex-direction:column;align-items:center}
+.wide img{width:100%;max-height:470px;object-fit:contain;display:block;border-radius:16px;
+  box-shadow:0 4px 10px rgba(16,17,20,.10),0 24px 50px rgba(16,17,20,.20)}
+.wide .cap{margin-top:12px;text-align:center;font-size:14px;color:#8b929c}
+
+/* экран компьютерной панели во всю ширину */
+.s.board{padding:42px 60px 34px}
+.s.board h2{font-size:40px}
+.s.board .lead{margin-top:12px;font-size:18px;max-width:74ch}
+.bul.row3{grid-template-columns:repeat(3,1fr);gap:10px 26px;margin-top:16px}
+.bul.row3 li{font-size:16.5px}
+.s.board .wide{margin-top:auto}
+.s.board .wide img{max-height:398px;object-fit:contain;object-position:center}
+
+/* групповой сеанс */
+.gs{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #ecedf1;
+  border-radius:12px;padding:11px 12px;font-size:14px}
+.gs b{flex:none;font-size:16px;width:48px}
+.gs span{flex:1;color:#5b626c}
+.gs i{flex:none;font-style:normal;font-size:13px;font-weight:800;color:#101114;background:#ffd60a;
+  border-radius:50px;padding:4px 10px}
+
+/* воронка внутри макапа: полоски, как в самой панели */
+.fn{margin-bottom:2px}
+.fn-t{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.fn-t span{font-size:13px;color:#5b626c}
+.fn-t b{font-size:14px;font-variant-numeric:tabular-nums}
+.fn-b{height:9px;border-radius:5px;background:#eef0f3;margin-top:4px;overflow:hidden}
+.fn-b i{display:block;height:100%;border-radius:5px;background:#ffd60a}
+.fn-c{font-size:13px;color:#8b929c;margin-top:3px}
+
+/* макап внутри экрана */
+.mk{padding:18px 16px;overflow:hidden;display:flex;flex-direction:column;gap:9px;
+  background:#fbfbfc}
+.mk-h{font-size:14px;font-weight:700;color:#101114;letter-spacing:-.01em}
+.mk-f{margin-top:auto;font-size:14px;font-weight:600;color:#0b7a42;background:#e9f8f0;
+  border-radius:12px;padding:11px 13px;line-height:1.35}
+.mk-arrow{font-size:13px;color:#9aa1ac;text-align:center}
+
+.tk{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;
+  border:1px solid #ecedf1;border-radius:12px;padding:10px 12px;font-size:14px}
+.tk i{font-style:normal;font-size:13px;font-weight:700;color:#0b7a42}
+.say{display:flex;gap:10px;background:#fffbe6;border:1px solid #ffe98a;border-radius:14px;
+  padding:12px;font-size:14px;line-height:1.4}
+.say .mic{flex:none;width:26px;height:26px;border-radius:50%;background:#ffd60a;
+  position:relative}
+/* узнаваемый микрофон: капсула, дужка и ножка */
+.say .mic:before{content:'';position:absolute;left:11px;top:6px;width:4px;height:8px;
+  border-radius:2px;background:#101114}
+.say .mic:after{content:'';position:absolute;left:8px;top:12px;width:10px;height:6px;
+  border:2px solid #101114;border-top:0;border-radius:0 0 8px 8px;
+  box-shadow:0 5px 0 -1px #101114}
+.doc{background:#fff;border:1px solid #ecedf1;border-radius:14px;padding:13px;font-size:13px;
+  line-height:1.45}
+.doc b{display:block;margin:7px 0 3px;font-size:13px}
+.doc b:first-child{margin-top:0;font-size:14px}
+.doc p{color:#5b626c;margin:2px 0}
+
+.qq{display:flex;gap:11px;background:#fff;border:1px solid #ecedf1;border-radius:12px;
+  padding:11px 12px;font-size:14px;line-height:1.4}
+.qq i{flex:none;font-style:normal;width:22px;height:22px;border-radius:50%;background:#101114;
+  color:#ffd60a;font-size:13px;font-weight:700;display:flex;align-items:center;
+  justify-content:center}
+
+.cd{background:#fff;border:1px solid #ecedf1;border-radius:13px;padding:12px}
+.cd-t{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cd-t b{font-size:14px}
+.cd-s{font-size:13px;color:#6d747e;margin-top:2px}
+.cd-g{font-size:13px;font-weight:700;margin-top:7px;display:inline-block;padding:4px 10px;
+  border-radius:50px}
+.cd.a .cd-g{background:#e9f8f0;color:#0b7a42}
+.cd.b .cd-g{background:#fff5da;color:#8a6a00}
+.cd.c .cd-g{background:#f2f3f5;color:#6d747e}
+.sc{font-size:14px;font-weight:800;width:30px;height:30px;border-radius:9px;display:flex;
+  align-items:center;justify-content:center}
+.sc.a{background:#0b7a42;color:#fff}
+.sc.b{background:#ffd60a;color:#101114}
+.sc.c{background:#e9eaee;color:#6d747e}
+
+.bd{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;
+  border:1px solid #ecedf1;border-radius:11px;padding:9px 12px;font-size:14px}
+.bd i{font-style:normal;font-weight:800;color:#0b7a42}
+
+.pick{display:grid;gap:8px}
+.pk{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #ecedf1;
+  border-radius:12px;padding:11px 12px;font-size:14px;font-weight:600}
+.pk i{width:19px;height:19px;border-radius:6px;border:2px solid #d3d6dc;flex:none}
+.pk.on{border-color:#ffd60a;box-shadow:0 0 0 2px #ffd60a}
+.pk.on i{background:#ffd60a;border-color:#ffd60a}
+.msg{background:#fff;border:1px solid #ecedf1;border-radius:14px;padding:12px;font-size:14px;
+  line-height:1.45;color:#3a4049}
+.msg u{color:#0b6bd8;text-decoration:none}
+.btn-y{background:#ffd60a;color:#101114;border-radius:12px;padding:12px;text-align:center;
+  font-size:14px;font-weight:700}
+
+.day{font-size:13px;font-weight:700;color:#8b929c}
+.slots{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.slots span{background:#fff;border:1px solid #ecedf1;border-radius:10px;padding:9px 0;
+  text-align:center;font-size:14px;font-weight:600}
+.slots span.off{color:#c3c7ce;background:#f6f7f9;text-decoration:line-through}
+.slots span.on{background:#ffd60a;border-color:#ffd60a}
+.mt{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #ecedf1;
+  border-radius:12px;padding:10px 12px;font-size:14px}
+.mt b{flex:none;font-size:14px;width:44px}
+.mt span{flex:1;color:#5b626c;line-height:1.3}
+.mt i{flex:none;font-style:normal;font-size:13px;font-weight:700;color:#0b7a42;
+  background:#e9f8f0;border-radius:50px;padding:4px 9px}
+.mt.now{border-color:#ffd60a;box-shadow:0 0 0 2px #ffd60a}
+.mt.now i{background:#ffd60a;color:#101114}
+.qa{background:#fff;border:1px solid #ecedf1;border-radius:12px;padding:11px 12px}
+.qa b{font-size:13px;color:#8b929c;font-weight:700;display:block}
+.qa p{font-size:14px;line-height:1.4;margin-top:3px}
+.qa.dim{background:#f7f8fa;border-color:#e6e8ec}
+.qa.dim p{color:#6d747e}
+
+.sms{background:#fff;border:1px solid #ecedf1;border-radius:14px;padding:13px;font-size:14px;
+  line-height:1.45}
+.call{display:flex;align-items:center;gap:10px;background:#e9f8f0;border-radius:12px;
+  padding:12px;font-size:14px;font-weight:600;color:#0b7a42}
+.call .ph{width:20px;height:20px;border-radius:50%;background:#0b7a42;flex:none}
+
+.addr{background:#fff;border:1px solid #ecedf1;border-radius:14px;padding:13px;font-size:14px}
+.addr p{color:#5b626c;line-height:1.45;margin-top:5px}
+.map{height:150px;border-radius:14px;background:
+  repeating-linear-gradient(45deg,#eef0f3 0 12px,#e6e9ed 12px 24px);
+  display:flex;align-items:center;justify-content:center;color:#8b929c;font-size:14px}
+
+.chat{border-radius:14px;padding:11px 13px;font-size:14px;line-height:1.45;max-width:92%}
+.chat.you{background:#fff;border:1px solid #ecedf1;align-self:flex-start}
+.chat.bot{background:#101114;color:#fff;align-self:flex-end}
+
+/* цифры */
+.nms{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:auto}
+.verdict{margin-top:44px;margin-bottom:auto;font-size:24px;font-weight:700;color:#fff;line-height:1.35;max-width:44ch;letter-spacing:-.015em}
+
+.nm{background:#191b20;border:1px solid #2a2d33;border-radius:20px;padding:26px 24px 24px}
+.nm b{display:block;font-size:64px;line-height:1;font-weight:800;letter-spacing:-.04em;
+  color:#ffd60a;font-variant-numeric:tabular-nums}
+.nm span{display:block;font-size:16px;color:#a7aeb9;margin-top:10px}
+
+/* путь */
+.pths{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:auto 0}
+.pth{background:#f7f8fa;border-radius:18px;padding:22px 22px 24px;position:relative}
+/* вариант С6: карточки-стрелки внахлёст — путь читается формой, без отдельных стрелок (Маша 10.08) */
+.pths{gap:8px 6px}
+.pth{clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%,20px 50%);
+  padding-left:44px}
+.pth:nth-child(3n+1){clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%);
+  padding-left:24px}
+.pth:nth-child(3n){clip-path:polygon(0 0,100% 0,100% 100%,0 100%,20px 50%)}
+.pth i{font-style:normal;display:flex;width:38px;height:38px;border-radius:11px;background:#101114;
+  color:#ffd60a;align-items:center;justify-content:center;font-size:16px;font-weight:800}
+.pth b{display:block;font-size:20px;margin-top:16px;letter-spacing:-.01em}
+.pth span{display:block;font-size:16px;color:#5b626c;margin-top:6px;line-height:1.4}
+
+/* телефоны */
+.s.phone{display:grid;grid-template-columns:1fr 800px;gap:40px;align-items:center;
+  padding:56px 64px}
+.ph-r{display:flex;gap:26px;justify-content:flex-end}
+
+/* инструменты */
+.s.tools h2{font-size:38px;max-width:100%}
+.s.tools .lead{margin-top:12px}
+.tls{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 32px;margin:30px 0 auto}
+.tl{display:flex;align-items:center;gap:14px;border-bottom:1px solid #ecedf1;padding-bottom:12px}
+/* подушечка со своим цветом у каждого инструмента: объём даёт светлый верх и мягкая тень */
+.tl i.pad{flex:none;width:46px;height:46px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;position:relative;
+  background:linear-gradient(160deg,var(--c1),var(--c2));
+  box-shadow:0 6px 14px var(--sh),inset 0 1px 0 rgba(255,255,255,.55)}
+.tl i.pad:after{content:'';position:absolute;inset:1px 1px 55% 1px;border-radius:13px 13px 22px 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0))}
+.tl .ic{width:24px;height:24px;flex:none;fill:none;stroke:#fff;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.tl b{display:block;font-size:17px;letter-spacing:-.01em}
+.tl span{display:block;font-size:14px;color:#5b626c;margin-top:1px;line-height:1.3}
+
+.sns{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:auto 0}
+/* шесть планов ложатся ровно: по три в ряд (Маша 10.08, добавили зум-интервью) */
+.sn{grid-column:span 2}
+.sn{background:#191b20;border-radius:18px;padding:22px}
+.sn .ic{width:30px;height:30px;fill:none;stroke:#ffd60a;stroke-width:1.8;stroke-linecap:round;
+  stroke-linejoin:round}
+.sn b{display:block;font-size:20px;margin-top:14px;letter-spacing:-.01em}
+.sn span{display:block;font-size:16px;color:#a7aeb9;margin-top:6px;line-height:1.4}
+
+/* слайд «в hh не видно картину целиком»: четыре слепые зоны (Маша 10.08) */
+.prs{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin:26px 0 auto}
+.pr{background:#f7f8fa;border-radius:18px;padding:22px 24px 24px}
+/* знак вопроса стоит ровно по центру строки заголовка (Маша 10.08) */
+.pr b{display:flex;align-items:center;gap:12px;font-size:19px;letter-spacing:-.01em}
+.pr b:before{content:'?';flex:0 0 auto;width:28px;height:28px;border-radius:9px;
+  background:#101114;color:#ffd60a;font-size:16px;font-weight:800;display:flex;
+  align-items:center;justify-content:center}
+.pr span{display:block;font-size:15px;color:#5b626c;margin-top:6px;line-height:1.4;padding-left:40px}
+
+/* слайд «Сколько это стоит»: три статьи расхода и крупный итог (Маша 10.08) */
+.cts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:38px 0 0}
+.ct{background:#15171b;border:1px solid #24272d;border-radius:20px;padding:26px 24px 28px}
+.ct b{display:block;font-size:19px;font-weight:600;color:#fff}
+.ct-v{display:block;font-size:44px;font-weight:800;color:#ffd60a;letter-spacing:-.03em;margin:14px 0 10px}
+.ct-d{display:block;font-size:15px;color:#9aa1ac;line-height:1.4}
+.ct-total{margin-top:auto;display:flex;align-items:baseline;gap:18px;padding-top:34px}
+.ct-total b{font-size:64px;font-weight:800;color:#ffd60a;letter-spacing:-.04em}
+.ct-total span{font-size:19px;color:#a7aeb9}
+
+/* финальный слайд с QR: слева смысл, справа крупный код */
+.s.qr{flex-direction:row;align-items:center;gap:64px}
+.qr-l{flex:1 1 auto;max-width:620px}
+.qr-cap{margin-top:26px;font-size:20px;color:#ffd60a;font-weight:700}
+.qr-r{flex:0 0 auto;background:#fff;border-radius:28px;padding:26px;
+  box-shadow:12px 14px 0 rgba(0,0,0,.35)}
+.qr-r img{width:300px;height:300px;display:block}
+/* главная мысль на финале: просто фраза, без полоски (Маша 10.08) */
+.qr-idea{margin-top:34px;font-size:23px;line-height:1.45;font-weight:600;color:#fff;max-width:52ch}
+
+@keyframes въезд{from{opacity:0;transform:translateY(26px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.s{animation:none}}
+
+.verdict.dk{color:#101114;margin-top:22px}
+.s:not(.dark) .verdict{color:#101114}
+/* карточки слепых зон крупнее: слайд не должен пустовать снизу */
+.prs{margin-top:34px}
+.pr{padding:24px 26px 26px}
+.pr b{font-size:21px}
+.pr span{font-size:16px}
+
+/* титул и финал */
+.s.hero{justify-content:center;background:#101114;color:#fff}
+.brand-mark{width:96px;height:96px;border-radius:26px;align-self:flex-start;margin-bottom:30px}
+.s.hero h1{max-width:19ch}
+.s.hero .lead{color:#a7aeb9;max-width:56ch}
+.hero-m{position:absolute;right:72px;bottom:88px;text-align:right}
+.hero-m b{display:block;font-size:140px;line-height:.9;font-weight:800;color:#ffd60a;
+  letter-spacing:-.05em}
+.hero-m span{display:block;font-size:18px;color:#a7aeb9;margin-top:12px}
+
+.s.final{justify-content:center}
+.fcs{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:52px}
+.fc b{display:block;font-size:46px;letter-spacing:-.035em;font-weight:800;color:#ffd60a;letter-spacing:-.03em}
+.fc span{display:block;font-size:16px;color:#a7aeb9;margin-top:8px;line-height:1.4}
+
+</style><div class="deck"><section class="s hero"><img class="brand-mark" src="img/logo-hr.png" alt=""><h1>Самая мощная и современная<br>HR-панель среди ивент-компаний</h1><p class="lead big">Собственная разработка. Только мы знаем, что нам нужно, поэтому она сделана специально под процессы Структуры.</p><div class="hero-m"><b>×5</b><span>быстрее закрываем вакансии</span></div><div class="num">1</div></section><section class="s dark numbers"><h2>Найм сегодня</h2><p class="lead">Не будущая нагрузка, а то, что реально проходит сегодня через HR-отдел.</p><div class="nms"><div class="nm"><b>20</b><span>вакансий одновременно</span></div><div class="nm"><b>1 000+</b><span>откликов в день</span></div><div class="nm"><b>300+</b><span>сообщений в мессенджерах</span></div><div class="nm"><b>200+</b><span>приглашений в день</span></div></div><div class="verdict">Разобрать такой поток руками сложно и требует много времени. Поэтому мы создали панель, которая оптимизирует эти процессы и высвобождает 80% времени HR-отдела.</div><div class="num">2</div></section><section class="s problem"><h2>В hh не видно<br>картину целиком</h2><p class="lead">Кабинет hh показывает отдельные вакансии и отдельные отклики. Чтобы понять, что происходит с наймом сегодня, приходится открывать десяток вкладок и считать руками.</p><div class="prs"><div class="pr"><b>Сколько собеседований сегодня</b><span>расписание живёт в голове и в переписке</span></div><div class="pr"><b>Сколько вакансий реально в работе</b><span>часть висит, часть закрыта, часть ждёт оплаты</span></div><div class="pr"><b>Сколько откликов ждёт разбора</b><span>счётчики hh считают одно, а работа другое</span></div><div class="pr"><b>Что происходит между этапами</b><span>сквозной аналитики нет: где теряем людей, не видно</span></div></div><div class="verdict"><span class='hl'>Панель собирает это в один экран</span>: сегодняшний день, вакансии, отклики и воронка целиком.</div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">3</div></section><section class="s split"><div class="col-l"><h2>Панель забирает<br>80% рутины</h2><p class="lead"><span class='hl'>80% рутины закрывает панель</span>: массовые приглашения, переписка, предварительные интервью, запись на встречи.</p><ul class="bul"><li>HR остаётся живое собеседование</li><li>И решение, кого мы берём</li><li>Панель склеивает все этапы от вакансии до найма сама, круглосуточно</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Что ушло из ручной работы</div><div class="tk"><span>Написать текст вакансии</span><i>сделано</i></div><div class="tk"><span>Разобрать 1 000 откликов</span><i>сделано</i></div><div class="tk"><span>Отправить 200 приглашений</span><i>сделано</i></div><div class="tk"><span>Ответить на частые вопросы</span><i>сделано</i></div><div class="tk"><span>Записать на собеседование</span><i>сделано</i></div><div class="tk"><span>Напомнить о встрече</span><i>сделано</i></div><div class="mk-f">Осталось человеку: встреча и решение</div></div><div class="cap">80% операций закрывает панель</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">4</div></section><section class="s path"><h2>Путь кандидата от вакансии до найма</h2><p class="lead">Шесть этапов от пустой вакансии до вышедшего человека. <span class='hl'>Руками остаётся только собеседование, всё остальное занимает минуты</span>.</p><div class="pths"><div class="pth"><i>1</i><b>Вакансия</b><span>Пишем голосом, панель собирает текст</span></div><div class="pth"><i>2</i><b>Отбор</b><span>Балл и группа каждому отклику</span></div><div class="pth"><i>3</i><b>Приглашение</b><span>Одна кнопка на всю группу</span></div><div class="pth"><i>4</i><b>Запись</b><span>Кандидат сам выбирает время</span></div><div class="pth"><i>5</i><b>Встреча</b><span>Расписание и шпаргалка к разговору</span></div><div class="pth"><i>6</i><b>Найм</b><span>Сквозная аналитика по всем шагам</span></div></div><div class="num">5</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="on">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Всё о вакансии<br>в одном окне</h2><p class="lead"><span class='hl'>По каждой сразу видно, сколько откликов ждёт разбора</span>, сколько просмотров и до какого числа висит публикация.</p><ul class="bul"><li>Публикация на hh прямо отсюда</li><li>Черновики команды общие, не привязаны к устройству</li><li>Срок размещения и тип пакета на виду</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-vakansii.png?v=1786341292" alt=""></div><div class="cap">Список вакансий в телефоне</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">6</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="on">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Вакансию пишет ИИ,<br>а не мы вручную</h2><p class="lead"><span class='hl'>Два предложения голосом, и готов текст вакансии</span>. Панель сверяется с вакансиями конкурентов и средними зарплатами по рынку и делает нашу выгоднее.</p><div class="bgs"><div class="bg"><img src="img/claude.svg" alt=""><b>Claude Sonnet</b><span>пишет текст</span></div><div class="bg"><img src="img/wispr.png" alt=""><b>Wispr Flow</b><span>голос в текст</span></div></div><ul class="bul"><li>Сверка с рынком до написания, а не после</li><li>Вилка ставится цифрами, без «по договорённости»</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-vacnew.png?v=1786345275" alt=""></div><div class="cap">Экран новой вакансии</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">7</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="on">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Мини-интервью<br>перед живой встречей</h2><p class="lead">При создании вакансии отмечаем, что <span class='hl'>кандидат отвечает на вопросы сразу после отклика</span>. Вопросы панель пишет под конкретную роль.</p><ul class="bul"><li>Ответы приходят до того, как мы открыли резюме</li><li>Видно мотивацию и адекватность ожиданий</li><li>Слабые отсеиваются без нашего участия</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Менеджер по продажам · вопросы кандидату</div><div class="qq"><i>1</i><span>Какой у вас опыт продаж услуг, а не товаров?</span></div><div class="qq"><i>2</i><span>Средний чек сделки, которую вы вели сами?</span></div><div class="qq"><i>3</i><span>Готовы выезжать на площадки в выходные?</span></div><div class="qq"><i>4</i><span>Какой доход считаете для себя нормальным?</span></div><div class="mk-f">Кандидат отвечает сразу после отклика</div></div><div class="cap">Вопросы под конкретную вакансию</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">8</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="on">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Моментально приглашаем<br>300+ кандидатов</h2><p class="lead"><span class='hl'>Ничего не открываем на hh: всё в одном окне</span>. Слева очередь кандидатов, в центре карточка: опыт, последнее место работы, сопроводительное письмо и полное резюме.</p><ul class="bul"><li>Ничего не открываем на hh, всё здесь</li><li>Непрочитанные всегда сверху</li><li>Решение по кандидату в один клик</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-vakansiya-otkryta.png?v=1786351770" alt=""></div><div class="cap">Вакансия открыта: очередь и оценка одной кнопкой</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">9</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="on">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Современные<br>скоринговые системы</h2><p class="lead">Каждый отклик получает балл и попадает в группу: сильные, средние, слабые. <span class='hl'>600-1000 откликов разбираем за две минуты</span>.</p><ul class="bul"><li>Приглашаем сразу всю группу одной кнопкой</li><li>Порядок работы очевиден: сильные первыми</li><li>Никто не теряется в бесконечной ленте</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Оценка по вакансии</div><div class="cd a"><div class="cd-t"><b>Кандидат А.</b><span class="sc a">9</span></div><div class="cd-s">Руководитель отдела продаж</div><div class="cd-g">сильный</div></div><div class="cd b"><div class="cd-t"><b>Кандидат Б.</b><span class="sc b">7</span></div><div class="cd-s">Менеджер по работе с клиентами</div><div class="cd-g">средний</div></div><div class="cd c"><div class="cd-t"><b>Кандидат В.</b><span class="sc c">4</span></div><div class="cd-s">Администратор</div><div class="cd-g">слабый</div></div><div class="mk-f">Пригласить всех сильных · 128 человек</div></div><div class="cap">Группы, а не сплошная лента</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">10</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="on">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Панель объясняет оценку<br>и обучается</h2><p class="lead">Под каждым баллом видно, из чего он сложился. <span class='hl'>Своя система оценки</span>, собранная на признанных методиках подбора и настроенная под ивент-рынок.</p><ul class="bul"><li>Критерии свои для каждой вакансии</li><li>Дообучаем на том, кто реально дошёл до встречи</li></ul><div class="mds"><div class="md"><b>Структурированное интервью по компетенциям</b><span>США, основа корпоративного подбора</span></div><div class="md"><b>Метод STAR</b><span>ситуация, задача, действие, результат</span></div><div class="md"><b>Модель компетенций SHL</b><span>Великобритания, оценка деловых качеств</span></div><div class="md"><b>Поведенческая оценка DISC</b><span>психотип и стиль работы в команде</span></div></div></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-kandidat.png?v=1786345351" alt=""></div><div class="cap">Карточка кандидата с оценкой</div></div></div><div class="num">11</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="on">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Приглашаем 600+ кандидатов<br>одним нажатием</h2><p class="lead"><span class='hl'>Отметили группу галочками, нажали одну кнопку</span>. Каждому подставляется его имя и персональная ссылка для записи на собеседование.</p><ul class="bul"><li>За раз приглашаем до 1 000 человек</li><li>У каждого своё имя и своя ссылка на запись</li><li>Отправленное видно в общем списке</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Позвать всех</div><div class="pick"><div class="pk on"><i></i>Сильные · 128</div><div class="pk"><i></i>Средние · 214</div><div class="pk"><i></i>Слабые · 259</div></div><div class="msg">Здравствуйте! Мы посмотрели ваш отклик на вакансию «Менеджер по продажам мероприятий» и хотим пригласить вас на встречу.</div><div class="btn-y">Отправить 128 приглашений</div></div><div class="cap">Группа целиком за один раз</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">12</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="on">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><div class="chap">Мини-интервью</div><h2>Кандидат отвечает<br>на наши вопросы</h2><p class="lead">Ответил на приглашение, сразу получает список вопросов. <span class='hl'>Второй отбор до очной встречи</span>, ещё до того как мы потратили час.</p><ul class="bul"><li>Вопросы собраны заранее под нашу вакансию</li><li>Ответы оцениваются, и мы выбираем, кого позвать</li><li>На встречу зовём только тех, кто прошёл</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Вопросы и ответы · живой пример</div><div class="qa"><b>Какие мероприятия вели и какой был бюджет?</b><p>«Премия Муз-ТВ, около 200 млн. Внутриком Альфа-банка, 30 млн, исполнительный и креативный продюсер: идеи, бюджет, документация»</p></div><div class="qa"><b>Когда готовы выйти и на какой доход?</b><p>«10 августа, вилка 280-350 net»</p></div><div class="qa dim"><b>Другой кандидат на ту же вакансию</b><p>«Такого опыта не было, откликнулась больше на компанию»</p></div><div class="mk-f">ИИ: первому 7 из 10 — звать; второму 1 из 10 — не звать</div></div><div class="cap">Отбор до очной встречи</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">13</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="on">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><div class="chap">Конверсия в пришедших</div><div class="soon-tag">в разработке</div><h2>Увеличиваем конверсию<br>в пришедших</h2><p class="lead"><span class='hl'>Сообщение на hh теряется среди десятка других</span>. Добавляем SMS и голосовой звонок с напоминанием, что кандидата позвали на собеседование.</p><ul class="bul"><li>Текст свой в каждом канале, а не один на всех</li><li>Каждый канал включается и выключается отдельно</li><li>Звонок дожимает тех, кто не читает переписку</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">SMS кандидату</div><div class="sms">Елена, добрый день! Компания «Вызов Принят» приглашает вас на собеседование. Выберите удобное время по ссылке и запишитесь.</div><div class="mk-arrow">и голосом тем же текстом</div><div class="call"><i class="ph"></i><span>Исходящий звонок · 12 секунд</span></div></div><div class="cap">Три канала вместо одного</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">14</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="on">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Страница записи<br>для кандидатов</h2><p class="lead">HR не обзванивает сто человек, согласовывая время. <span class='hl'>Каждому уходит персональная ссылка</span>, и кандидат записывается сам.</p><ul class="bul"><li>Свободные окна отмечаем один раз</li><li>Занятые слоты исчезают у остальных сразу</li><li>Ссылка своя у каждой вакансии, со своим расписанием</li></ul><a class="demo" href="https://vyzov-hr.vercel.app/book?nid=demo1&amp;t=ea3acac4032ff3f6" target="_blank">Посмотреть, как видит кандидат</a></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Выберите удобное время</div><div class="day">Понедельник, 11 августа</div><div class="slots"><span>10:00</span><span class="off">11:00</span><span>12:00</span><span class="on">15:00</span><span>16:00</span><span class="off">17:00</span></div><div class="day">Вторник, 12 августа</div><div class="slots"><span>10:00</span><span>11:00</span><span class="off">12:00</span><span>15:00</span><span>16:00</span><span>17:00</span></div><div class="btn-y">Записаться на 15:00</div><div class="mk-f">Кандидат записывается сам, без переписки</div></div><div class="cap">Так это видит кандидат</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">15</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="on">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><div class="chap">Групповые интервью</div><h2>Групповые интервью<br>на 50+ человек</h2><p class="lead">Одна встреча вместо пятидесяти. <span class='hl'>Такого нет ни у кого</span>. Панель сама собирает группу на одно время и следит за наполняемостью.</p><ul class="bul"><li>Групповое интервью настраивается на любую вакансию</li><li>Кандидат видит только свободные места</li><li>Явка идёт в нашу скоринговую систему, и она обучается</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Групповое интервью · 11 августа</div><div class="gs"><b>15:00</b><span>Менеджер по продажам</span><i>46 из 50</i></div><div class="slots"><span class="on">записались 46</span><span>свободно 4</span><span>ждут ответа 9</span></div><div class="mk-h" style="margin-top:6px">Кто придёт</div><div class="mt"><b>15:00</b><span>Кандидат А. · сильный</span><i>записан</i></div><div class="mt"><b>15:00</b><span>Кандидат Б. · сильный</span><i>записан</i></div><div class="mt"><b>15:00</b><span>Кандидат В. · средний</span><i>записан</i></div><div class="mk-f">Одна встреча закрывает работу целого дня</div></div><div class="cap">Группа на одно время</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">16</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="on">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Персональная страница<br>встречи у каждого</h2><p class="lead">Кандидат получает подробную схему: карта, фотографии территории, сторожки и шлагбаума. <span class='hl'>У каждой вакансии своя ссылка</span>, со своим временем и адресом, всё настраивается в панели.</p><ul class="bul"><li>Меньше опозданий и звонков «я не могу найти»</li><li>Работает с телефона, ничего скачивать не надо</li><li>Там же кнопка перенести встречу</li></ul><a class="demo" href="https://vyzov-hr.vercel.app/book?nid=demo1&amp;t=ea3acac4032ff3f6" target="_blank">Посмотреть, как видит кандидат</a></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-route.png?v=1786309088" alt=""></div><div class="cap">Реальная страница для кандидата</div></div></div><div class="num">17</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="on">Встреча</span><span class="">Найм</span></div><h2>Календарь встреч<br>на день и на неделю</h2><p class="lead"><span class='hl'>Кто, когда и на какую вакансию</span>. Групповые интервью, слоты, отметка «пришёл» и «не пришёл» в один тап.</p><ul class="bul"><li>Список на день готов к печати</li><li>Одной кнопкой напоминаем тем, кого позвали, но кто ещё не принял приглашение</li><li>Явка попадает в аналитику автоматически</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Сегодня, 11 августа</div><div class="mt"><b>10:00</b><span>Кандидат А. · менеджер по продажам</span><i>пришёл</i></div><div class="mt"><b>12:00</b><span>Кандидат Б. · менеджер по продажам</span><i>пришёл</i></div><div class="mt now"><b>15:00</b><span>Кандидат В. · оператор</span><i>сейчас</i></div><div class="mt"><b>16:00</b><span>Кандидат Г. · оператор</span></div><div class="mt"><b>17:00</b><span>Групповой сеанс · 8 человек</span></div><div class="mk-f">Явка сразу попадает в аналитику</div></div><div class="cap">Расписание на день</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">18</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="on">Встреча</span><span class="">Найм</span></div><h2>Шпаргалка к каждому<br>разговору</h2><p class="lead"><span class='hl'>Панель заранее готовит вопросы под конкретного человека</span>: по его опыту и по слабым местам его же резюме.</p><ul class="bul"><li>Готовится на всех, кто назначен на сегодня</li><li>Видно, что проверить в первую очередь</li><li>Разговор идёт по делу, а не «расскажите о себе»</li></ul><a class="demo" href="shpargalka.html" target="_blank">Посмотреть шпаргалку</a></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Шпаргалка · сегодня, 15:00</div><div class="qa"><b>Проверить</b><p>Перерыв в стаже 8 месяцев в 2025 году</p></div><div class="qa"><b>Сильное</b><p>Вёл продажи мероприятий на 2 млн, работал с агентствами</p></div><div class="qa"><b>Спросить</b><p>Как считали свой процент на прошлом месте?</p></div><div class="qa"><b>Спросить</b><p>Готовы к переработкам и работе в выходные, когда идёт событие?</p></div><div class="qa"><b>Спросить</b><p>Что делали, когда клиент отказался за неделю до события?</p></div></div><div class="cap">Вопросы под конкретного человека</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">19</div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="on">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Свой кабинет<br>у каждого рекрутёра</h2><p class="lead"><span class='hl'>Вход по короткому паролю</span>, и человек видит только свои вакансии, свою переписку и свой список звонков.</p><ul class="bul"><li>Руководитель заводит людей сам, за минуту</li><li>Каждый работает в своём кабинете и не мешает другому</li><li>Видно, кто ведёт вакансию и кто по ней звонит</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Команда · доступы</div><div class="qa"><b>Анастасия</b><p>HR-директор · видит все вакансии</p></div><div class="qa"><b>Дмитрий</b><p>Руководитель департамента продаж · 4 вакансии</p></div><div class="qa"><b>Инна</b><p>Рекрутёр · 3 вакансии</p></div><div class="qa"><b>Поделиться доступом</b><p>Готовое сообщение с паролем — отправить в мессенджер</p></div></div><div class="cap">У каждого свой вход и свои вакансии</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""></div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="on">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="">Найм</span></div><h2>Списки обзвона<br>вместо блокнота</h2><p class="lead"><span class='hl'>Панель сама собирает, кому звонить</span>: все приглашённые, кто ещё не выбрал время. Записавшиеся из списка уходят автоматически.</p><ul class="bul"><li>Телефон под рукой, отметка о дозвоне в один клик</li><li>Комментарий после звонка сохраняется сам</li><li>Обзвон можно передать другому, вакансия остаётся за своим</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Обзвон · по вакансиям</div><div class="qa"><b>Event-менеджер</b><p>позвонить 60 кандидатам · прозвонено 12</p></div><div class="qa"><b>Ведёт и обзванивает</b><p>Инна Саргсян</p></div><div class="qa"><b>Кристина Скрябина</b><p>+7 981 459-55-82 · позвали 10 августа</p></div><div class="qa"><b>Комментарий</b><p>Перезвонить после 18:00, сейчас на смене</p></div></div><div class="cap">Кому звонить сегодня — без выгрузок и таблиц</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""></div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="on">Встреча</span><span class="">Найм</span></div><h2>Анкета на входе<br>по QR-коду</h2><p class="lead"><span class='hl'>Кандидат заполняет анкету сам</span>, пока ждёт встречу: наводит камеру на код у стойки и вводит данные.</p><ul class="bul"><li>Данные сразу в панели, не нужно переписывать с бумаги</li><li>В расписании у пришедших появляется метка «анкета»</li><li>В воронке видно, сколько дошло до анкеты</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Анкета · 14 августа</div><div class="qa"><b>Кирилл Кузьмин</b><p>Исполнительный директор · 18:04</p></div><div class="qa"><b>Скосырев Александр</b><p>Event-менеджер · 18:01</p></div><div class="qa"><b>Лист с QR</b><p>Распечатать и положить на стойку</p></div><div class="qa"><b>Воронка</b><p>Пришли 12 → анкету заполнили 9</p></div></div><div class="cap">Бумажные анкеты больше не нужны</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""></div></section><section class="s split"><div class="col-l"><div class="steps"><span class="">Вакансия</span><span class="">Отбор</span><span class="">Приглашение</span><span class="">Запись</span><span class="">Встреча</span><span class="on">Найм</span></div><h2>Сквозная аналитика<br>от просмотра до выхода</h2><p class="lead">Весь путь виден целиком: просмотры вакансии, отклики, приглашения, записи, дошедшие и вышедшие на работу. <span class='hl'>Видна конверсия на каждом этапе</span>, и понятно, какой шаг усиливать.</p><ul class="bul"><li>Сквозная аналитика по каждой вакансии</li><li>Конверсия на каждом этапе</li><li>Слабый этап виден сразу, и понятно, где усилить</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Воронка по вакансии</div><div class="fn"><div class="fn-t"><span>Просмотры вакансии</span><b>3 348</b></div><div class="fn-b"><i style="width:100%"></i></div><div class="fn-c"></div></div><div class="fn"><div class="fn-t"><span>Отклики</span><b>561</b></div><div class="fn-b"><i style="width:62%"></i></div><div class="fn-c">17% от просмотров</div></div><div class="fn"><div class="fn-t"><span>Приглашения</span><b>128</b></div><div class="fn-b"><i style="width:36%"></i></div><div class="fn-c">23% от откликов</div></div><div class="fn"><div class="fn-t"><span>Записались</span><b>74</b></div><div class="fn-b"><i style="width:24%"></i></div><div class="fn-c">58% от приглашений</div></div><div class="fn"><div class="fn-t"><span>Дошли на встречу</span><b>46</b></div><div class="fn-b"><i style="width:16%"></i></div><div class="fn-c">62% от записавшихся</div></div><div class="fn"><div class="fn-t"><span>Вышли на работу</span><b>9</b></div><div class="fn-b"><i style="width:8%"></i></div><div class="fn-c">20% от дошедших</div></div><div class="mk-f">Слабое место видно сразу: запись на встречу</div></div><div class="cap">Конверсия на каждом шаге</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">20</div></section><section class="s split"><div class="col-l"><div class="chap">Умный поиск</div><h2>Находим и вакансию,<br>и человека за секунду</h2><p class="lead">Одно поле ищет сразу по двум базам: по названиям вакансий и по кандидатам, которые уже откликались. <span class='hl'>Отвечает мгновенно</span>, без похода на hh.</p><ul class="bul"><li>Ищет по имени кандидата и по его должности</li><li>По вакансии сразу видно, сколько ждёт разбора</li><li>Из результата попадаем прямо в нужную карточку</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-poisk.png?v=1786343725" alt=""></div><div class="cap">Поиск по имени и по вакансиям</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">21</div></section><section class="s split"><div class="col-l"><div class="chap">Единый чат</div><h2>Все переписки<br>в одном окне</h2><p class="lead">Диалоги по всем вакансиям в одном списке. <span class='hl'>Видно, кто ждёт дольше всех</span>, можно показать только неотвеченные и открыть историю разговора целиком.</p><ul class="bul"><li>Ответ прямо из списка, без захода в вакансию</li><li>Оттуда же: пригласить, напомнить, добавить в избранное</li><li>И перейти в саму вакансию одним нажатием</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-soobsheniya.png?v=1786343741" alt=""></div><div class="cap">Сообщения</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">22</div></section><section class="s split"><div class="col-l"><div class="chap">Автоответчик с 7:00 до 23:00</div><h2>Отвечает кандидатам,<br>пока мы заняты</h2><p class="lead">Панель разобрала нашу живую переписку и знает частые вопросы. <span class='hl'>Отвечает с 7:00 до 23:00, как живой человек</span>: не мгновенно, с паузой, и сложное оставляет человеку.</p><ul class="bul"><li>Отвечаем сразу, поэтому до встречи доходит больше людей</li><li>Ответы написаны живым языком, кандидат не чувствует робота</li><li>Отвечает тысячам кандидатов в сутки, без очереди</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Автоответ</div><div class="chat you">Здравствуйте! А где вы находитесь и как добраться?</div><div class="chat bot">Мы в Люблино, Егорьевский проезд, 2Ас10. Подробная схема проезда с фотографиями по ссылке: <u>vyzov-hr.ru/route</u>. Ждём вас!</div><div class="mk-f">Ответ ушёл через 7 минут: как человек, а не робот</div></div><div class="cap">Типовые вопросы закрываются сами</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">23</div></section><section class="s split"><div class="col-l"><div class="chap">Классификатор вопросов</div><h2>14 типов вопросов,<br>собранных из нашей переписки</h2><p class="lead"><span class='hl'>Ответы собраны из наших же диалогов с кандидатами</span>. У каждого типа свой ответ, который можно переписать под себя.</p><ul class="bul"><li>Список растёт вместе с практикой</li><li>Каждый тип включается отдельно</li><li>Видно, сколько раз сработал каждый</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Частые вопросы кандидатов</div><div class="tk"><span>Когда созвонимся</span><i>36</i></div><div class="tk"><span>Перенос встречи</span><i>14</i></div><div class="tk"><span>Статус отклика</span><i>13</i></div><div class="tk"><span>Зарплата и оклад</span><i>11</i></div><div class="tk"><span>Адрес и как проехать</span><i>11</i></div><div class="tk"><span>График и занятость</span><i>10</i></div><div class="tk"><span>Формат встречи</span><i>9</i></div></div><div class="cap">Числа из нашей реальной переписки</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">24</div></section><section class="s split"><div class="col-l"><div class="chap">Умные сниппеты</div><h2>Говорим «мои контакты»,<br>и они появляются в письме</h2><p class="lead">Пишем или диктуем сообщение кандидату. <span class='hl'>Сказали ключевое слово, и панель подставляет готовый кусок</span>: ссылку на запись, адрес, контакты.</p><ul class="bul"><li>Не нужно помнить формулировки</li><li>Ссылки подставляются сами, искать их руками не нужно</li><li>Работает и голосом, и текстом</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Сообщение кандидату</div><div class="say"><i class="mic"></i><span>«Добрый день, отправляю ссылку на запись и мои контакты»</span></div><div class="mk-arrow">панель подставляет</div><div class="msg">Добрый день! Записаться на удобное время можно здесь: <u>ссылка на запись</u>.<br>Мои контакты: Анастасия, +7 926 800-74-64, hrd@vyzov-prinyat.ru</div></div><div class="cap">Заготовки по ключевому слову</div></div></div><div class="num">25</div></section><section class="s split"><div class="col-l"><div class="chap">Напоминалка</div><h2>Никто не забывает<br>про встречу</h2><p class="lead"><span class='hl'>Половина неявок это не «передумал», а «забыл»</span>. Панель напоминает сама: и записавшимся, и тем, кто ещё нет.</p><ul class="bul"><li>Напоминание накануне и в день встречи</li><li>Не записавшимся уходит отдельное сообщение</li><li>Каждое напоминание видно в переписке</li></ul></div><div class="col-r"><div class="dev"><div class="dev-scr mk"><div class="mk-h">Напоминания</div><div class="chat bot">Напоминаем: завтра в 15:00 ждём вас на собеседовании. Адрес и схема проезда: ссылка.</div><div class="chat bot">Вы откликнулись, но ещё не выбрали время. Свободные окна на этой неделе: ссылка.</div><div class="mk-f">Уходит само, без нашего участия</div></div><div class="cap">Два типа напоминаний</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">26</div></section><section class="s dark phone"><div class="ph-l"><h2>И всё это работает<br>прямо в телефоне</h2><p class="lead">Разобрать отклики в такси, пригласить пятерых на светофоре, посмотреть расписание в лифте. <span class='hl'>Полноценная панель, а не урезанная версия</span>.</p></div><div class="ph-r"><div class="dev sm"><div class="dev-scr"><img src="img/m-glavnaya.png?v=1786341334" alt=""></div><div class="cap">Главная</div></div><div class="dev sm"><div class="dev-scr"><img src="img/m-soobsheniya.png?v=1786343741" alt=""></div><div class="cap">Переписка</div></div><div class="dev sm"><div class="dev-scr"><img src="img/m-vacnew.png?v=1786345275" alt=""></div><div class="cap">Новая вакансия</div></div></div><div class="num">27</div></section><section class="s tools"><h2>Инструменты, которые работают уже сейчас</h2><div class="tls"><div class="tl"><i class="pad" style="--c1:#FFD84D;--c2:#F0A800;--sh:rgba(240,168,0,.35)"><svg viewBox="0 0 24 24" class="ic"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg></i><div><b>Автор вакансий</b><span>текст с голоса, сверка с рынком</span></div></div><div class="tl"><i class="pad" style="--c1:#5FD08A;--c2:#12A150;--sh:rgba(18,161,80,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M4 6h16M7 12h10M10 18h4"/></svg></i><div><b>Сортировщик</b><span>балл и группа каждому отклику</span></div></div><div class="tl"><i class="pad" style="--c1:#7BB8FF;--c2:#2A6FE0;--sh:rgba(42,111,224,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M21 12a8 8 0 1 1-3.2-6.4"/><path d="M12 8v5l3 2"/></svg></i><div><b>Мини-интервью</b><span>вопросы сразу после отклика</span></div></div><div class="tl"><i class="pad" style="--c1:#FF9F7A;--c2:#E4542A;--sh:rgba(228,84,42,.32)"><svg viewBox="0 0 24 24" class="ic"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 9.5a3 3 0 0 1 0 6M20 20a5 5 0 0 0-3-4.6"/></svg></i><div><b>Позвать всех</b><span>приглашение группе одной кнопкой</span></div></div><div class="tl"><i class="pad" style="--c1:#B79BFF;--c2:#6A3FD1;--sh:rgba(106,63,209,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8M8 13h5"/></svg></i><div><b>Автоответчик</b><span>ответы на частые вопросы</span></div></div><div class="tl"><i class="pad" style="--c1:#68E0D0;--c2:#0E9C90;--sh:rgba(14,156,144,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></i><div><b>Сниппеты</b><span>заготовки по ключевому слову</span></div></div><div class="tl"><i class="pad" style="--c1:#FFC46B;--c2:#E08A00;--sh:rgba(224,138,0,.32)"><svg viewBox="0 0 24 24" class="ic"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/><path d="M8.5 15l2.2 2.2L16 12"/></svg></i><div><b>Самозапись</b><span>кандидат выбирает время сам</span></div></div><div class="tl"><i class="pad" style="--c1:#FF8FB4;--c2:#D62A66;--sh:rgba(214,42,102,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M18 8a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 14 18 8z"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/></svg></i><div><b>Напоминалка</b><span>накануне и в день встречи</span></div></div><div class="tl"><i class="pad" style="--c1:#9AD35A;--c2:#5C9B12;--sh:rgba(92,155,18,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M5 3h11l4 4v14H5z"/><path d="M9 12h7M9 16h4M9 8h4"/></svg></i><div><b>Шпаргалка</b><span>вопросы под конкретного человека</span></div></div><div class="tl"><i class="pad" style="--c1:#8FE3C2;--c2:#12876B;--sh:rgba(18,135,107,.32)"><svg viewBox="0 0 24 24" class="ic"><circle cx="8" cy="9" r="2.6"/><circle cx="16" cy="9" r="2.6"/><path d="M3 19a5 5 0 0 1 10 0M13 19a5 5 0 0 1 8-3.4"/></svg></i><div><b>Групповые собеседования</b><span>одна встреча на 50+ человек</span></div></div><div class="tl"><i class="pad" style="--c1:#7DD3FF;--c2:#0E86C4;--sh:rgba(14,134,196,.32)"><svg viewBox="0 0 24 24" class="ic"><path d="M4 20V9M10 20V4M16 20v-8M22 20H2"/></svg></i><div><b>Аналитика</b><span>сквозные цифры по всем шагам</span></div></div><div class="tl"><i class="pad" style="--c1:#C4B5FD;--c2:#7C5CE0;--sh:rgba(124,92,224,.32)"><svg viewBox="0 0 24 24" class="ic"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></svg></i><div><b>Умный поиск</b><span>вакансия и кандидат за секунду</span></div></div></div><div class="verdict dk">Двенадцать инструментов, и каждый работает уже сегодня.</div><div class="num">28</div></section><section class="s dark"><h2>Что добавляем дальше</h2><p class="lead"><span class='hl'>Панель улучшается каждую неделю</span>: берём в работу то, что сильнее мешает на текущем найме.</p><div class="sns"><div class="sn"><svg viewBox="0 0 24 24" class="ic"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l5-2.6v8.2l-5-2.6z"/></svg><b>Зум-интервью</b><span>видеовстреча прямо из панели, ссылка уходит кандидату сама</span></div><div class="sn"><svg viewBox="0 0 24 24" class="ic"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.37 2.3.57 3.5.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.57 3.5a1 1 0 0 1-.25 1z"/></svg><b>Дозвон и SMS</b><span>звонок и сообщение там, где переписку не читают</span></div><div class="sn"><svg viewBox="0 0 24 24" class="ic"><path d="M12 2.6l7.5 3v6.1c0 4.3-3 8.2-7.5 9.7 -4.5-1.5-7.5-5.4-7.5-9.7V5.6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg><b>Служба безопасности</b><span>проверка кандидата по открытым и закрытым базам</span></div><div class="sn"><svg viewBox="0 0 24 24" class="ic"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 11v2M21 12h1"/></svg><b>Разбор разговоров</b><span>запись встречи превращается в решение и заметки</span></div><div class="sn"><svg viewBox="0 0 24 24" class="ic"><path d="M12 3c1 3.5-1.5 4.5-1.5 7A3.5 3.5 0 0 0 14 13c0-2-1-3-1-3 3 1.5 4 4 4 6a5 5 0 0 1-10 0c0-5 5-6 5-13z"/></svg><b>Горячая база</b><span>кандидаты прошлых вакансий, готовые выйти сейчас</span></div><div class="sn"><svg viewBox="0 0 24 24" class="ic"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><b>Другие площадки</b><span>SuperJob, Авито Работа, Работа.ру помимо hh</span></div></div><div class="num">29</div></section><section class="s dark final"><h2>HR-панель, собранная<br>персонально под компанию</h2><p class="lead big">Готовые системы делают то, что придумали за нас. <span class='hl'>Наша собрана вокруг того, как нанимаем именно мы</span>, и меняется каждую неделю вместе с работой отдела.</p><div class="fcs"><div class="fc"><b>×5</b><span>скорость найма</span></div><div class="fc"><b>80%</b><span>рутины закрывает панель</span></div><div class="fc"><b>еженедельно</b><span>правки под то, как мы работаем</span></div></div><div class="num">30</div></section><section class="s dark cost"><h2>Сколько это стоит</h2><p class="lead"><span class='hl'>Вся её работа обходится около 3 000 рублей в месяц</span>: сервер, разбор кандидатов ИИ и голосовой ввод.</p><div class="cts"><div class="ct"><b>Сервер</b><span class="ct-v">$5</span><span class="ct-d">Hetzner, круглосуточно, вместе с ботом и страницами записи</span></div><div class="ct"><b>Разбор кандидатов ИИ</b><span class="ct-v">$15</span><span class="ct-d">за июль: 953 разбора откликов и 285 мини-интервью</span></div><div class="ct"><b>Голос в текст</b><span class="ct-v">$7</span><span class="ct-d">Wispr Flow: вакансии и сообщения диктуем голосом</span></div></div><div class="ct-total"><b>$27 в месяц</b><span>вся панель целиком, на любое количество вакансий</span></div><div class="num">31</div></section><section class="s split"><div class="col-l"><h2>Сколько это экономит<br>за год</h2><p class="lead">Живой калькулятор: двигаем ползунки под свои числа и <span class='hl'>сразу видим, сколько времени и денег освобождает панель</span>.</p><ul class="bul"><li>Считается на ваших вакансиях, а не на средних</li><li>Видно и часы, и деньги</li><li>Открывается по ссылке прямо сейчас</li></ul><a class="demo" href="kalkulyator.html" target="_blank">Открыть живой калькулятор</a></div><div class="col-r"><div class="dev"><div class="dev-scr"><img src="img/m-kalkulyator.png?v=1786349924" alt=""></div><div class="cap">Калькулятор выгоды в телефоне</div></div></div><div class="slide-logo"><img src="img/logo-hr.png" alt=""><span><b>Вызов Принят</b><i>HR-панель</i></span></div><div class="num">32</div></section><section class="s dark qr"><div class="qr-l"><h2>Доступ к HR-панели</h2><p class="lead big">Наведите камеру телефона: <span class='hl'>панель откроется сразу, без установки и паролей</span>.</p><div class="qr-cap">vyzov-hr.vercel.app</div><div class="qr-idea">Задача панели: сделать найм прозрачным и кратно эффективнее, чтобы лучшие люди приходили к нам быстрее и дешевле.</div></div><div class="qr-r"><img src="img/qr-panel.png" alt="QR-код панели"></div><div class="num">33</div></section></div>
